@@ -29,3 +29,12 @@ resource "aws_subnet" "ibm-private-subnet" {
     Name = "ibm private subnet"
   }
 }
+
+# Create Internet Gateway
+resource "aws_internet_gateway" "ibm-igw" {
+  vpc_id = aws_vpc.ibm-vpc.id
+
+  tags = {
+    Name = "ibm internet"
+  }
+}
