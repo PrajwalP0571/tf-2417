@@ -18,3 +18,14 @@ resource "aws_subnet" "ibm-public-subnet" {
     Name = "ibm public subnet"
   }
 }
+
+# Create Private Subnet
+resource "aws_subnet" "ibm-private-subnet" {
+  vpc_id     = aws_vpc.ibm-vpc.id
+  cidr_block = "10.0.2.0/24"
+  map_public_ip_on_launch = "false"
+
+  tags = {
+    Name = "ibm private subnet"
+  }
+}
