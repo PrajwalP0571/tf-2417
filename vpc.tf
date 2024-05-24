@@ -15,6 +15,6 @@ resource "aws_subnet" "ibm-public-subnet" {
   map_public_ip_on_launch = "true"
 
   tags = {
-    Name = "Main"
+    Name = "ibm public subnet"
   }
 }
