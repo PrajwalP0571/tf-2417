@@ -52,3 +52,9 @@ resource "aws_route_table" "ibm-pub-rt" {
     Name = "ibm public route table"
   }
 }
+
+# Create Public Association For Routing
+resource "aws_route_table_association" "ibm-public-rt-asc" {
+  subnet_id      = aws_subnet.ibm-public-subnet.id
+  route_table_id = aws_route_table.ibm-pub-rt.id
+}
