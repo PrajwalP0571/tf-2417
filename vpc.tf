@@ -63,3 +63,14 @@ resource "aws_route_table_association" "ibm-public-rt-asc" {
 resource "aws_eip" "ibm-eip-nat" {
   vpc = true
 }
+
+# Create NAT Gateway
+resource "aws_nat_gateway" "ibm-nat-gw" {
+  allocation_id = aws_eip.ibm-eip-nat.id
+  subnet_id     = aws_subnet.ibm-public-subnet.id
+
+  tags = {
+    Name = "ibm nat gateway"
+  }
+  # depends_on = [aws_internet_gateway.example]
+}
