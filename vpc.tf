@@ -140,3 +140,32 @@ resource "aws_network_acl_association" "ibm-private-nacl-assc" {
   network_acl_id = aws_network_acl.ibm-pvt-nacl.id
   subnet_id      = aws_subnet.ibm-private-subnet.id
 }
+
+# Create Public Security Group
+resource "aws_security_group" "ibm-pub-sg" {
+  name        = "ibm-pub-sg"
+  description = "Allow SSH & HTTP"
+  vpc_id      = aws_vpc.ibm-vpc.id
+
+  tags = {
+    Name = "ibm-public-sg"
+  }
+}
+
+# SSH Rule
+resource "aws_vpc_security_group_ingress_rule" "ibm-pub-ssh" {
+  security_group_id = aws_security_group.ibm-pub-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 22
+  to_port           = 22
+  ip_protocol       = "tcp"
+}
+
+# HTTP Rule
+resource "aws_vpc_security_group_ingress_rule" "ibm-pub-http" {
+  security_group_id = aws_security_group.ibm-pub-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 80
+  to_port           = 80
+  ip_protocol       = "tcp"
+}
