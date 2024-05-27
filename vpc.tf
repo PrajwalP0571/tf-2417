@@ -208,7 +208,7 @@ resource "aws_vpc_security_group_ingress_rule" "ibm-pvt-pg" {
 
 # Security Group Out Bound Rule
 resource "aws_vpc_security_group_egress_rule" "ibm-all-traffic-pvt" {
-  security_group_id = aws_security_group.ibm-pub-sg.id
+  security_group_id = aws_security_group.ibm-pvt-sg.id
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
