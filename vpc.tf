@@ -128,3 +128,15 @@ resource "aws_network_acl" "ibm-pvt-nacl" {
     Name = "ibm-private-nacl"
   }
 }
+
+# Create Public NACL Association
+resource "aws_network_acl_association" "ibm-public-nacl-assc" {
+  network_acl_id = aws_network_acl.ibm-pub-nacl.id
+  subnet_id      = aws_subnet.ibm-public-subnet.id
+}
+
+# Create Private NACL Association
+resource "aws_network_acl_association" "ibm-private-nacl-assc" {
+  network_acl_id = aws_network_acl.ibm-pvt-nacl.id
+  subnet_id      = aws_subnet.ibm-private-subnet.id
+}
