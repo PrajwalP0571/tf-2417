@@ -74,3 +74,31 @@ resource "aws_nat_gateway" "ibm-nat-gw" {
   }
   # depends_on = [aws_internet_gateway.example]
 }
+
+# Create Public NACL
+resource "aws_network_acl" "ibm-pub-nacl" {
+  vpc_id = aws_vpc.ibm-vpc.id
+
+  egress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  ingress {
+    protocol   = "tcp"
+    rule_no    = 100
+    action     = "allow"
+    cidr_block = "0.0.0.0/0"
+    from_port  = 0
+    to_port    = 65535
+  }
+
+  tags = {
+    Name = "ibm-public-nacl"
+  }
+}
+
