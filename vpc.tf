@@ -169,3 +169,10 @@ resource "aws_vpc_security_group_ingress_rule" "ibm-pub-http" {
   to_port           = 80
   ip_protocol       = "tcp"
 }
+
+# Security Group Out Bound Rule
+resource "aws_vpc_security_group_egress_rule" "ibm-all-traffic" {
+  security_group_id = aws_security_group.ibm-pub-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
