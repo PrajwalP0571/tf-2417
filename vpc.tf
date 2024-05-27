@@ -176,3 +176,39 @@ resource "aws_vpc_security_group_egress_rule" "ibm-all-traffic" {
   cidr_ipv4         = "0.0.0.0/0"
   ip_protocol       = "-1" # semantically equivalent to all ports
 }
+
+# Create Private Security Group
+resource "aws_security_group" "ibm-pvt-sg" {
+  name        = "ibm-pvt-sg"
+  description = "Allow SSH"
+  vpc_id      = aws_vpc.ibm-vpc.id
+
+  tags = {
+    Name = "ibm-private-sg"
+  }
+}
+
+# SSH Rule
+resource "aws_vpc_security_group_ingress_rule" "ibm-pvt-ssh" {
+  security_group_id = aws_security_group.ibm-pvt-sg.id
+  cidr_ipv4         = "10.0.0.0/16"
+  from_port         = 22
+  to_port           = 22
+  ip_protocol       = "tcp"
+}
+
+# HTTP Rule
+resource "aws_vpc_security_group_ingress_rule" "ibm-pvt-pg" {
+  security_group_id = aws_security_group.ibm-pvt-sg.id
+  cidr_ipv4         = "10.0.0.0/16"
+  from_port         = 5432
+  to_port           = 5432
+  ip_protocol       = "tcp"
+}
+
+# Security Group Out Bound Rule
+resource "aws_vpc_security_group_egress_rule" "ibm-all-traffic" {
+  security_group_id = aws_security_group.ibm-pub-sg.id
+  cidr_ipv4         = "0.0.0.0/0"
+  ip_protocol       = "-1" # semantically equivalent to all ports
+}
