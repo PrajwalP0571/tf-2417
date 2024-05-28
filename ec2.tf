@@ -5,7 +5,7 @@ resource "aws_instance" "food-public-server" {
   key_name = "730"
   subnet_id = aws_subnet.food-public-subnet.id
   vpc_security_group_ids = [aws_security_group.food-pub-sg.id]
-  user_data  = file("ecomm.sh")
+  user_data  = file("food.sh")
 
   tags = {
     Name = "food-public-server"
